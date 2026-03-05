@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Trinity – Student RC Boat Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #111;
+      background: #fff;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+    }
+    header a.logo {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 16px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      margin-top: 60px;
+    }
+
+    section {
+      padding: 80px 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    section:nth-of-type(odd) {
+      background: #f5f5f5;
+    }
+
+    h1, h2 {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* HERO with video background */
+    .hero {
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      color: #fff;
+      overflow: hidden;
+    }
+    .hero-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(0,0,0,0.7), rgba(0,0,0,0.25));
+    }
+    .hero-inner {
+      position: relative;
+      max-width: 700px;
+      padding: 100px 16px 80px;
+      transform: translateY(0);
+      opacity: 1;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+    .btn-primary {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 10px 24px;
+      background: #ff3b2f;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      border-radius: 2px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    img.responsive {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+    ul {
+      padding-left: 18px;
+    }
+
+    /* TEAM GRID */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+      margin-top: 32px;
+    }
+    .team-card {
+      text-align: center;
+    }
+    .team-photo {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 16px;
+    }
+    .team-name {
+      margin: 0 0 4px;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .team-role {
+      margin: 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* MEDIA GALLERY */
+    .media-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* responsive grid */
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .media-item {
+      cursor: pointer;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #000;
+    }
+    .media-thumb {
+      width: 100%;
+      height: 150px;              /* fixed thumbnail height */
+      object-fit: cover;          /* crop to fit nicely */
+      display: block;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .media-item:hover .media-thumb {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .lightbox.open {
+      display: flex;
+    }
+    .lightbox-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      position: relative;
+    }
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      border-radius: 4px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -32px;
+      right: 0;
+      color: #fff;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    footer {
+      padding: 32px 16px;
+      text-align: center;
+      font-size: 13px;
+      background: #000;
+      color: #aaa;
+    }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .hero-inner { padding: 100px 16px 80px; }
+      .hero h1 { font-size: 28px; }
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="#hero" class="logo">Trinity</a>
+
+  <nav>
+
+    <a href="#trinity">Trinity</a>
+    <a href="#team">Team</a>
+    <a href="#boat">Boat</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#partners">Partners</a>
+    <a href="#media">Media</a>
+      <a href="http://10.72.16.62/control"
+       target="_blank"
+       class="btn-primary"
+       style="margin-left:24px;">
+      TRINITY connect
+    </a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="pictures and video/Pictures and video/bateau .mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-inner">
+      <h1>Trinity – RC Boat Project</h1>
+      <p>
+        Trinity is a 70&nbsp;cm RC monohull, designed as a two‑year engineering project at ICAM.
+        Our goal is to reach a stable speed around 24&nbsp;km/h with a reliable brushless setup
+        and an ESP32‑based control system.
+      </p>
+      <a href="#trinity" class="btn-primary">Discover the project</a>
+    </div>
+  </section>
+
+  <!-- TRINITY -->
+  <section id="trinity">
+    <h2>Trinity, when three become one</h2>
+    <p>
+      The name “Trinity” comes from the convergence of three key elements: hull, propulsion,
+      and electronic control. When these three bricks are combined, the boat reaches its best
+      performance.
+    </p>
+    <p>
+      The project is led by naval and mechanical engineering students, combining propulsion
+      calculations, 3D design and on‑water testing.
+    </p>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <h2>The team</h2>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="pictures and video/Pictures and video/aya blank.jpg" alt="Aya Mekrane" class="team-photo">
+        <h3 class="team-name">Aya Mekrane</h3>
+        <p class="team-role">Propulsion &amp; ESP32 control</p>
+      </div>
+      <div class="team-card">
+        <img src="pictures and video/Pictures and video/Capture d'écran 2026-03-04 162105.png"
+             alt="Manuel Neveu" class="team-photo">
+        <h3 class="team-name">Manuel Neveu</h3>
+        <p class="team-role">Hull &amp; structure</p>
+      </div>
+      <div class="team-card">
+        <img src="pictures and video/Pictures and video/picture guigui.png"
+             alt="Guilherme Sequiera Araujo" class="team-photo">
+        <h3 class="team-name">Guilherme Sequiera Araujo</h3>
+        <p class="team-role">Build &amp; testing</p>
+      </div>
+      <div class="team-card">
+        <img src="pictures and video/Pictures and video/Capture d'écran 2026-03-04 162352.png"
+             alt="Oscar Delesalle" class="team-photo">
+        <h3 class="team-name">Oscar Delesalle</h3>
+        <p class="team-role">Build &amp; testing</p>
+      </div>
+      <div class="team-card">
+        <img src="pictures and video/Pictures and video/picture bhanavi.png" alt="Bhanavi" class="team-photo">
+        <h3 class="team-name">Bhanavi</h3>
+        <p class="team-role">Build &amp; testing</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOAT -->
+  <section id="boat">
+    <h2>The boat</h2>
+    <div class="grid-2">
+      <div>
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_104820.jpg" alt="Trinity boat on the water" class="responsive">
+      </div>
+      <div>
+        <p><strong>Hull</strong>: about 70&nbsp;cm monohull, optimized for stability around 24&nbsp;km/h.</p>
+        <p><strong>Propulsion</strong>: 36&nbsp;mm brushless motor, marine ESC and a propeller tuned for the right balance between thrust and speed.</p>
+        <p><strong>Electronics &amp; control</strong>: onboard ESP32, basic sensors and a web interface that lets us monitor and adjust parameters from a smartphone.</p>
+          <p><strong>Foiling kit</strong>: The boat is equipped with a mountable foiling kit that let the boat fly at max 20 km/h and an increase of 40% efficiency </p>
+      </div>
+    </div>
+  <!-- FOIL -->
+  <section>
+    <h2>The foil design</h2>
+    <div class="grid-2">
+      <div>
+        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-06-23 203528.png" alt="Trinity boat on the water" class="responsive">
+      </div>
+      <div>
+        <p><strong>Profile</strong>: NACA-2412 Foils at the front and back </p>
+        <p><strong>Form</strong>: The back foil is in T-shape and the front are "mustache" shaped</p>
+        <p><strong>Placement</strong>: One at the back and two in the front</p>
+          <p><strong>Flight</strong>: Start flying at 14 Km/h.Flies 6cm above the water </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <h2>Timeline and milestones</h2>
+    <ul>
+      <li><strong>Year 1</strong> – The first team composed of Oscar Delesalle, Gabriel Perrotin, Felix Olivier and Milo Bessonet worked on the first versions of the hull and the choice of components. At this date, the teachers successfully approved the project, which led us to the second part of the project: manufacturing of the boat.</li>
+      <li><strong>Year 2</strong> – At the beginning of the second year, the new team composed of Guilherme Sequeira Araujo, Aya Mekrane, Manuel Neveu and Oscar Delesalle took over. Oscar was already in the first‑year group and was selected as the link between Year&nbsp;1 and Year&nbsp;2.</li>
+      <li><strong>January 2026</strong> – A new member joined us: Bhanavi Pandey, an Indian engineering student spending three months at ICAM. Thanks to her software and coding skills, we were able to push the project one step further.</li>
+      <li><strong>Goal</strong> – A reliable, performant boat for demos and technical presentations.</li>
+    </ul>
+  </section>
+
+  <!-- PARTNERS -->
+  <section id="partners">
+    <h2>Partners and support</h2>
+    <p>
+      The Trinity project is supported by ICAM (workshops and academic mentoring) and
+      technical partners who provide equipment and advice.
+    </p>
+    <p>
+      Our project would not be possible without the supervision of Mr&nbsp;Ouerhani.
+    </p>
+    <img src="pictures and video/Pictures and video/logo icam.svg" alt="Trinity partners logos" class="responsive">
+  </section>
+
+ <!-- MEDIA -->
+<section id="media">
+  <h2>Media</h2>
+  <p>Photo gallery of the boat: build, setup and on‑water runs.</p>
+
+  <div class="media-gallery">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152317.jpg"
+         alt="Trinity run 1" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_110313.jpg"
+         alt="Trinity run 2" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_110304.jpg"
+         alt="Build detail 1" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_5825.jpg"
+         alt="Build detail 2" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_102359.jpg"
+         alt="Build detail 3" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105738.jpg"
+         alt="Build detail 4" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105743.jpg"
+         alt="Build detail 5" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105953.jpg"
+         alt="Build detail 6" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105955.jpg"
+         alt="Build detail 7" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152300.jpg"
+         alt="Build detail 8" class="media-thumb">
+    <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152306.jpg" alt="Build detail 9" class="media-thumb">
+      <img src="pictures and video/Converted .PNG/IMG_5685.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5686.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5714.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5715.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5716.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5717.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5720.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5721.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5727.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5728.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5729.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5730.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5763.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5819.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5973.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5975.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5976.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5988.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5989.jpg" class="media-thumb" alt="">
+  <img src="pictures and video/Converted .PNG/IMG_5991.jpg" class="media-thumb" alt="">
+</div>
+</section>
+</main>
+
+<footer>
+  &copy; 2026 Trinity Project – Manuel Neveu &amp; team. All rights reserved.
+</footer>
+
+<!-- Lightbox overlay -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <img src="" alt="Preview" class="lightbox-img" id="lightbox-img">
+  </div>
+</div>
+
+<script>
+  // Small scroll effect on hero text
+  window.addEventListener('scroll', () => {
+    const heroInner = document.querySelector('.hero-inner');
+    const scrollY = window.scrollY || window.pageYOffset;
+    const offset = Math.min(scrollY * 0.2, 40);
+    const opacity = Math.max(1 - scrollY / 400, 0);
+    heroInner.style.transform = `translateY(${offset}px)`;
+    heroInner.style.opacity = opacity;
+  });
+
+  // Lightbox logic for media gallery
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('.media-thumb').forEach(img => {
+    img.addEventListener('click', () => {
+      const fullSrc = img.getAttribute('data-full') || img.src;
+      lightboxImg.src = fullSrc;
+      lightbox.classList.add('open');
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('open');
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>
