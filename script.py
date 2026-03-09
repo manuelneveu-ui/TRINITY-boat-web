@@ -1,6 +1,6 @@
 import os
 
-folder = r"pictures and video/Pictures and video"
+folder = r"pictures and video/Pictures and video/Pictures"
 extensions = (".jpg", ".jpeg", ".png")  # converted images
 
 tags = []

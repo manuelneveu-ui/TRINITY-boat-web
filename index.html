@@ -200,14 +200,15 @@
 
     /* MEDIA GALLERY */
     .media-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 24px;
-    }
+  display: none;   /* will be turned on by JS */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
     .media-thumb {
       width: 100%;
-      height: 150px;
+      max-width: 320px;   /* smaller thumbnails to reduce work */
+      height: 180px;
       object-fit: cover;
       display: block;
       cursor: pointer;
@@ -312,7 +313,7 @@
 </head>
 <body>
 
-<div class="left-strip"></div>
+<div class="left-strip"></div></div>
 
 <header>
   <a href="#hero" class="logo">Trinity</a>
@@ -404,7 +405,6 @@
     </div>
   </section>
 
-
   <!-- BOAT -->
   <section id="boat">
     <div class="boat-header">
@@ -462,8 +462,6 @@
     </ul>
   </section>
 
-  </section>
-
   <!-- PARTNERS -->
   <section id="partners">
     <h2>Partners and support</h2>
@@ -478,39 +476,65 @@
   </section>
 
   <!-- MEDIA -->
+
   <section id="media">
     <h2>Media</h2>
     <p>Photo gallery of the boat: build, setup and on‑water runs.</p>
+      <div id="gallery-loader" style="
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+">
+  <div>
+    <img src="pictures and video/Pictures and video/loading picture.gif" alt="Loading" style="width:64px;height:64px;display:block;margin:0 auto;">
+    <p style="margin-top:8px;font-size:13px;color:#555;text-align:center;">Loading media…</p>
+  </div></div>
 
     <div class="media-gallery">
-        <img src="pictures and video/Converted .PNG/IMG_5685.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5686.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5714.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5715.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5716.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5717.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5720.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5721.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5727.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5728.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5729.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5730.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5763.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5819.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5973.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5975.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5976.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5988.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5989.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Converted .PNG/IMG_5991.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Capture d'écran 2026-03-04 162105.png" class="media-thumb" alt="">
-  <img src="pictures and video/Pictures and video/Capture d'écran 2026-03-04 162352.png" class="media-thumb" alt="">
-  <img src="pictures and video/Pictures and video/aya blank.jpg" class="media-thumb" alt="">
-  <img src="pictures and video/Pictures and video/beau trinity boat.png" class="media-thumb" alt="">
-  <img src="pictures and video/Pictures and video/picture bhanavi.png" class="media-thumb" alt="">
-  <img src="pictures and video/Pictures and video/picture guigui.png" class="media-thumb" alt="">
-</div>
-
+      <img src="pictures and video/Converted .PNG/IMG_5685.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5686.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5714.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5715.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5716.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5717.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5720.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5721.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5727.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5728.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5729.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5730.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5763.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5819.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5973.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5975.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5976.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5988.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5989.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5991.jpg" class="media-thumb" alt="" >
+        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-06-23 203528.png" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-06-24 004855.png" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-10-12 235425.png" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-12-02 102307.png" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-12-02 102345.png" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-12-02 102410.png" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_102359.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_104820.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105738.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105743.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105953.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105955.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_110304.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_110313.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152300.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152306.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152317.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_5825.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/IMG_5992.jpg" class="media-thumb" alt="">
+        <img src="pictures and video/Pictures and video/Pictures/dessin speedboat.jpg" class="media-thumb" alt="">
     </div>
   </section>
 </main>
@@ -519,11 +543,39 @@
   &copy; 2026 Trinity Project – Manuel Neveu &amp; team. All rights reserved.
 </footer>
 
-<div class="lightbox" id="lightbox">
-
-</div>
+<div class="lightbox" id="lightbox"></div>
 
 <script>
+    // -------- Gallery preload & loader --------
+window.addEventListener('load', () => {
+  const loader = document.getElementById('gallery-loader');
+  const gallery = document.querySelector('.media-gallery');
+  const imgs = gallery ? Array.from(gallery.querySelectorAll('img')) : [];
+
+  if (!gallery || imgs.length === 0) {
+    if (loader) loader.style.display = 'none';
+    if (gallery) gallery.style.display = 'grid';
+    return;
+  }
+
+  let loaded = 0;
+  const total = imgs.length;
+
+  function checkDone() {
+    loaded++;
+    if (loaded >= total) {
+      if (loader) loader.style.display = 'none';
+      gallery.style.display = 'grid';
+    }
+  }
+
+  imgs.forEach(img => {
+    const tmp = new Image();
+    tmp.onload = checkDone;
+    tmp.onerror = checkDone;
+    tmp.src = img.src;
+  });
+});
   window.addEventListener('scroll', () => {
     const heroInner = document.querySelector('.hero-inner');
     if (!heroInner) return;
