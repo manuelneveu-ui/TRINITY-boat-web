@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TRINITY connect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020617;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: #0f172a;
+      padding: 32px 28px;
+      border-radius: 10px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+      max-width: 420px;
+      width: 90%;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin: 0 0 24px;
+      font-size: 14px;
+      color: #cbd5f5;
+    }
+
+    .account-btn {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: 1px solid #1d4ed8;
+      background: #1d4ed8;
+      color: #f9fafb;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .account-btn.secondary {
+      background: transparent;
+      border-color: #4b5563;
+    }
+
+    .status-dot-ok {
+      color: #22c55e;
+    }
+    .status-dot-bad {
+      color: #ef4444;
+    }
+
+    .top-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    a.back-link {
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    a.back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="top-line">
+    <span>TRINITY connect</span>
+    <a href="index.html" class="back-link">← Back to site</a>
+  </div>
+
+  <h1>Choose account</h1>
+  <p>Select which Wi‑Fi account TRINITY should use.</p>
+
+  <button class="account-btn" data-account="1">
+    <span>
+      <span id="wifi-dot-1" class="status-dot-bad">●</span>
+      <span style="margin-left:6px;">MANUEL connect</span>
+    </span>
+    <span>Connect</span>
+  </button>
+
+  <button class="account-btn secondary" data-account="2">
+    <span>
+      <span id="wifi-dot-2" class="status-dot-bad">●</span>
+      <span style="margin-left:6px;">GUILHERME connect</span>
+    </span>
+    <span>Connect</span>
+  </button>
+    <button class="account-btn secondary" data-account="2">
+    <span>
+      <span id="wifi-dot-2" class="status-dot-bad">●</span>
+      <span style="margin-left:6px;">AYA connect</span>
+    </span>
+    <span>Connect</span>
+  </button>
+    <button class="account-btn secondary" data-account="2">
+    <span>
+      <span id="wifi-dot-2" class="status-dot-bad">●</span>
+      <span style="margin-left:6px;">OSCAR connect</span>
+    </span>
+    <span>Connect</span>
+  </button>
+    <button class="account-btn secondary" data-account="2">
+    <span>
+      <span id="wifi-dot-2" class="status-dot-bad">●</span>
+      <span style="margin-left:6px;">BHANAVI connect</span>
+    </span>
+    <span>Connect</span>
+  </button>
+
+  <p id="info" style="margin-top:12px;font-size:12px;color:#9ca3af;">
+    Waiting for TRINITY…
+  </p>
+</div>
+
+<script>
+  // ESP32 base URL
+  const BASE_URL = 'http://10.72.16.62';
+
+  function applyWifiStatus(connected, currentAccount) {
+    const dot1 = document.getElementById('wifi-dot-1');
+    const dot2 = document.getElementById('wifi-dot-2');
+    if (!dot1 || !dot2) return;
+
+    dot1.className = 'status-dot-bad';
+    dot2.className = 'status-dot-bad';
+
+    if (!connected) return;
+
+    if (currentAccount === 1) {
+      dot1.className = 'status-dot-ok';
+    } else if (currentAccount === 2) {
+      dot2.className = 'status-dot-ok';
+    }
+  }
+
+  function setInfo(text) {
+    const info = document.getElementById('info');
+    if (info) info.textContent = text;
+  }
+
+  function fetchStatus() {
+    fetch(`${BASE_URL}/wifi-status`)
+      .then(r => r.json())
+      .then(data => {
+        // expected from ESP32: { connected: true/false, currentAccount: 1 or 2 }
+        applyWifiStatus(!!data.connected, data.currentAccount);
+        if (data.connected) {
+          setInfo(`Connected on Account ${data.currentAccount}.`);
+        } else {
+          setInfo('Not connected to any configured Wi‑Fi.');
+        }
+      })
+      .catch(() => {
+        applyWifiStatus(false, null);
+        setInfo('Unable to reach TRINITY (offline?).');
+      });
+  }
+
+  document.querySelectorAll('.account-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const account = btn.getAttribute('data-account');
+      setInfo(`Asking TRINITY to use Account ${account}…`);
+      fetch(`${BASE_URL}/wifi-reconnect?account=${account}`)
+        .then(() => {
+          setTimeout(fetchStatus, 2000);
+        })
+        .catch(() => {
+          setInfo('Error sending command to TRINITY.');
+        });
+    });
+  });
+
+  applyWifiStatus(false, null);
+  fetchStatus();
+  setInterval(fetchStatus, 10000);
+</script>
+
+</body>
+</html>
