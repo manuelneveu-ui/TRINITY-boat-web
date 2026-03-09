@@ -70,6 +70,37 @@
       letter-spacing: 0.06em;
     }
 
+    /* Title bars attached to blue strip */
+    .lca-main-title-wrapper,
+.lca-section-title-wrapper {
+  position: relative;
+  margin: 0 0 10px -30px;
+}
+
+.lca-main-title,
+.lca-section-title {
+  position: relative;
+  margin: 0;
+  padding: 10px 40px;
+  background: #5ec6ff;    /* light blue */
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 22px;
+  text-align: left;
+  display: inline-block;  /* width = text + padding */
+}
+
+@media (max-width: 768px) {
+  /* ... your existing mobile styles ... */
+
+  .lca-main-title-wrapper::before,
+  .lca-section-title-wrapper::before {
+    left: 0;
+    width: 100%;          /* full width on mobile */
+  }
+}
+
     main {}
     section {
       padding: 80px 24px 60px;
@@ -79,6 +110,7 @@
 
     .intro-text {
       max-width: 720px;
+      margin: 0 auto;
     }
 
     .grid-2 {
@@ -202,16 +234,16 @@
     }
 
     .lca-modelling-item {
-  text-align: center;              /* center image + caption horizontally */
-}
+      text-align: center;
+    }
 
-.lca-modelling-item img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  display: inline-block;           /* works with text-align:center */
-}
+    .lca-modelling-item img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      display: inline-block;
+    }
 
     .lca-modelling-caption {
       margin-top: 6px;
@@ -251,6 +283,11 @@
       .left-strip {
         display: none;
       }
+      /* on mobile, bar should be full width */
+      .lca-main-title-wrapper::before,
+      .lca-section-title-wrapper::before {
+        left: 0;
+      }
     }
   </style>
 </head>
@@ -282,7 +319,9 @@
   <!-- INTRO / GOAL -->
   <section id="lca-intro">
     <span class="pill">Life cycle analysis</span>
-    <h1>Environmental footprint of the Trinity hull</h1>
+    <div class="lca-main-title-wrapper">
+      <h1 class="lca-main-title">Environmental footprint of the Trinity hull</h1>
+    </div>
     <p class="intro-text">
       Composite boats are lightweight and efficient, but their materials and manufacturing steps are energy‑intensive and emit greenhouse gases over the boat’s life cycle.
     </p>
@@ -295,7 +334,9 @@
 
   <!-- STUDIED SYSTEM -->
   <section id="lca-system">
-    <h2>Studied system</h2>
+    <div class="lca-section-title-wrapper">
+      <h2 class="lca-section-title">Studied system</h2>
+    </div>
     <div class="grid-2">
       <div>
         <h3>Functional unit</h3>
@@ -332,7 +373,9 @@
 
   <!-- SYSTEM BOUNDARIES -->
   <section id="lca-boundaries">
-    <h2>System boundaries</h2>
+    <div class="lca-section-title-wrapper">
+      <h2 class="lca-section-title">System boundaries</h2>
+    </div>
     <div class="grid-2">
       <div>
         <h3>Included processes</h3>
@@ -359,7 +402,9 @@
 
   <!-- INVENTORY + SOFTWARE -->
   <section id="lca-inventory">
-    <h2>Life cycle inventory</h2>
+    <div class="lca-section-title-wrapper">
+      <h2 class="lca-section-title">Life cycle inventory</h2>
+    </div>
     <div class="grid-2">
       <div>
         <h3>Key inputs</h3>
@@ -418,7 +463,9 @@
 
   <!-- RESULTS -->
   <section id="lca-results">
-    <h2>Main results</h2>
+    <div class="lca-section-title-wrapper">
+      <h2 class="lca-section-title">Main results</h2>
+    </div>
     <div class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-label">Climate change impact</div>
@@ -446,7 +493,9 @@
 
   <!-- IMPROVEMENT + LIMITATIONS -->
   <section id="lca-improvements">
-    <h2>Improvement options and limitations</h2>
+    <div class="lca-section-title-wrapper">
+      <h2 class="lca-section-title">Improvement options and limitations</h2>
+    </div>
     <div class="grid-2">
       <div>
         <h3>Eco‑design directions</h3>
