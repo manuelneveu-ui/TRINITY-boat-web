@@ -120,42 +120,46 @@
     <span>Open</span>
   </a>
 
-  <div id="info" class="info">Waiting for TRINITY status...</div>
+  <div id="info" class="info">Checking TRINITY link...</div>
 </div>
 
 <script>
-  const BASE_URL = '';
+  const TEST_URL = "http://10.95.204.62/";
+  const dot = document.getElementById("wifi-dot-1");
 
   function setInfo(text) {
-    const info = document.getElementById('info');
+    const info = document.getElementById("info");
     if (info) info.textContent = text;
   }
 
-  let ws;
-  function initWS() {
-    const wsUrl = `ws://${window.location.hostname}:81/`;
-    ws = new WebSocket(wsUrl);
+  function setDot(ok) {
+    if (!dot) return;
+    dot.className = ok ? "status-dot-ok" : "status-dot-bad";
+  }
 
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        if (data.type === "ok") {
-          document.getElementById("wifi-dot-1").className = "status-dot-ok";
-          setInfo("TRINITY is connected and sent OK automatically. Ready to start.");
-        }
-      } catch (e) {
-        console.error("WS parse error", e);
+  async function fetchStatus() {
+    try {
+      const response = await fetch(TEST_URL, {
+        method: "GET",
+        cache: "no-store"
+      });
+
+      if (response.ok) {
+        setDot(true);
+        setInfo("TRINITY link detected. Device is reachable.");
+      } else {
+        setDot(false);
+        setInfo(`TRINITY responded with HTTP ${response.status}.`);
       }
-    };
+    } catch (error) {
+      setDot(false);
+      setInfo("TRINITY link not reachable.");
+      console.error("Fetch error:", error);
+    }
   }
 
-  function fetchStatus() {
-    console.log("Fetching status...");
-  }
-
-  initWS();
   fetchStatus();
-  setInterval(fetchStatus, 2000);
+  setInterval(fetchStatus, 3000);
 </script>
 
 </body>

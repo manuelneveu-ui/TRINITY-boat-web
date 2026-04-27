@@ -6,42 +6,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
+    :root {
+      --blue: #5ec6ff;
+      --dark: #111;
+      --text: #111;
+      --muted: #666;
+      --border: #e5e5e5;
+      --shadow: 0 6px 18px rgba(0,0,0,.08);
+      --header-h: 60px;
+      --sidebar-w: 180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #111;
+      color: var(--text);
       background: #fff;
+      line-height: 1.6;
     }
 
     .left-strip {
       position: fixed;
       top: 0;
       left: 0;
-      width: 180px;
+      width: var(--sidebar-w);
       height: 100vh;
-      background: #5ec6ff;
+      background: var(--blue);
       z-index: 0;
     }
 
-    header, main, footer {
-      position: relative;
-      z-index: 1;
+    .page {
+      margin-left: var(--sidebar-w);
     }
 
     header {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: rgba(0,0,0,0.85);
+      inset: 0 0 auto 0;
+      height: var(--header-h);
+      background: rgba(0,0,0,.85);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 24px;
       z-index: 1000;
     }
-    header a.logo {
+
+    .logo {
       color: #fff;
       text-decoration: none;
       font-weight: bold;
@@ -49,68 +63,97 @@
       text-transform: uppercase;
       font-size: 14px;
     }
+
     nav {
       display: flex;
       align-items: center;
+      gap: 16px;
     }
+
     nav a {
       color: #fff;
       text-decoration: none;
-      margin-left: 16px;
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
-    nav a:hover {
+
+    nav a:hover,
+    nav a:focus-visible {
       text-decoration: underline;
+      outline: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 13px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #000;
     }
 
     h1, h2, h3 {
       text-transform: uppercase;
       letter-spacing: 0.06em;
+      margin: 0 0 16px;
     }
 
-    /* Title bars attached to blue strip */
     .lca-main-title-wrapper,
-.lca-section-title-wrapper {
-  position: relative;
-  margin: 0 0 10px -30px;
-}
+    .lca-section-title-wrapper {
+      text-align: center;
+      margin: 0 0 18px;
+    }
 
-.lca-main-title,
-.lca-section-title {
-  position: relative;
-  margin: 0;
-  padding: 10px 40px;
-  background: #5ec6ff;    /* light blue */
-  color: #000000;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 22px;
-  text-align: left;
-  display: inline-block;  /* width = text + padding */
-}
+    .lca-main-title,
+    .lca-section-title {
+      margin: 0;
+      padding: 14px 36px;
+      background: var(--blue);
+      color: #000;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: inline-block;
+      border-radius: 6px;
+      text-align: center;
+    }
 
-@media (max-width: 768px) {
-  /* ... your existing mobile styles ... */
+    .lca-main-title {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+    }
 
-  .lca-main-title-wrapper::before,
-  .lca-section-title-wrapper::before {
-    left: 0;
-    width: 100%;          /* full width on mobile */
-  }
-}
+    .lca-section-title {
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    }
 
-    main {}
+    h3 {
+      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+      text-align: center;
+    }
+
+    main {
+      padding: var(--header-h) 0 0;
+    }
+
     section {
       padding: 80px 24px 60px;
       max-width: 1100px;
-      margin: 0 auto 0 180px;
+      margin: 0 auto 0 var(--sidebar-w);
     }
 
     .intro-text {
       max-width: 720px;
       margin: 0 auto;
+      text-align: center;
     }
 
     .grid-2 {
@@ -125,7 +168,9 @@
     }
 
     .pill {
-      display: inline-block;
+      display: block;
+      width: fit-content;
+      margin: 0 auto 12px;
       padding: 4px 10px;
       border-radius: 999px;
       font-size: 11px;
@@ -133,7 +178,6 @@
       letter-spacing: 0.08em;
       background: #eee;
       color: #555;
-      margin-bottom: 8px;
     }
 
     .highlight-box {
@@ -142,7 +186,6 @@
       margin-top: 16px;
     }
 
-    /* KPI cards */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -153,7 +196,7 @@
     .kpi-card {
       position: relative;
       border-radius: 10px;
-      border: 1px solid #e5e5e5;
+      border: 1px solid var(--border);
       padding: 16px 16px 18px;
       font-size: 13px;
       display: flex;
@@ -163,7 +206,7 @@
       text-align: center;
       min-height: 120px;
       background: linear-gradient(135deg, #ffffff, #f7fbff);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+      box-shadow: 0 6px 14px rgba(0,0,0,.04);
     }
 
     .kpi-card::before {
@@ -186,34 +229,34 @@
     .kpi-value {
       font-size: 26px;
       font-weight: 700;
-      color: #111;
+      color: var(--dark);
       margin: 2px 0 6px;
     }
 
     .kpi-note {
       margin: 0;
       font-size: 11px;
-      color: #666;
+      color: var(--muted);
     }
 
-    /* Figures */
     .lca-figure {
       margin-top: 24px;
       text-align: center;
     }
+
     .lca-figure img {
       max-width: 100%;
       height: auto;
       border-radius: 4px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow);
     }
+
     .lca-figure-caption {
       margin-top: 8px;
       font-size: 12px;
-      color: #666;
+      color: var(--muted);
     }
 
-    /* Modelling pictures */
     .lca-modelling-block {
       margin-top: 40px;
     }
@@ -241,15 +284,19 @@
       max-width: 100%;
       height: auto;
       border-radius: 4px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow);
       display: inline-block;
     }
 
     .lca-modelling-caption {
       margin-top: 6px;
       font-size: 12px;
-      color: #666;
+      color: var(--muted);
       text-align: center;
+    }
+
+    .section-spaced-top {
+      margin-top: 40px;
     }
 
     footer {
@@ -258,272 +305,265 @@
       font-size: 13px;
       background: #000;
       color: #aaa;
-      margin-left: 180px;
+      margin-left: var(--sidebar-w);
     }
 
     @media (max-width: 768px) {
-      nav { display: none; }
-      section {
-        margin: 0 auto;
-        padding: 80px 16px 40px;
+      nav {
+        display: none;
       }
-      footer {
-        margin-left: 0;
-        padding: 24px 16px;
-      }
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-      .kpi-grid {
-        grid-template-columns: 1fr;
-      }
-      .lca-modelling-grid {
-        grid-template-columns: 1fr;
-      }
+
       .left-strip {
         display: none;
       }
-      /* on mobile, bar should be full width */
-      .lca-main-title-wrapper::before,
-      .lca-section-title-wrapper::before {
-        left: 0;
+
+      .page,
+      section,
+      footer {
+        margin-left: 0;
+      }
+
+      section {
+        padding: 80px 16px 40px;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lca-modelling-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lca-main-title,
+      .lca-section-title {
+        width: 100%;
+        padding: 14px 16px;
       }
     }
   </style>
 </head>
 <body>
-<div class="left-strip"></div>
+  <div class="left-strip"></div>
 
-<header>
-  <a href="index.html#hero" class="logo">Trinity</a>
+  <main class="page">
+    <header>
+      <a href="index.html#hero" class="logo">Trinity</a>
+      <nav>
+        <a href="index.html#trinity">Trinity</a>
+        <a href="index.html#team">Team</a>
+        <a href="index.html#boat">Boat</a>
+        <a href="index.html#timeline">Timeline</a>
+        <a href="index.html#partners">Partners</a>
+        <a href="index.html#media">Media</a>
+        <a href="lca.html">LCA study</a>
+        <a href="connect.html" class="btn btn-primary">TRINITY connect</a>
+      </nav>
+    </header>
 
-  <nav>
-    <a href="index.html#trinity">Trinity</a>
-    <a href="index.html#team">Team</a>
-    <a href="index.html#boat">Boat</a>
-    <a href="index.html#timeline">Timeline</a>
-    <a href="index.html#partners">Partners</a>
-    <a href="index.html#media">Media</a>
-    <a href="lca.html">LCA study</a>
-
-    <a href="connect.html"
-       class="btn-primary"
-       id="trinity-connect"
-       style="margin-left:24px;">
-      TRINITY connect
-    </a>
-  </nav>
-</header>
-
-<main>
-  <!-- INTRO / GOAL -->
-  <section id="lca-intro">
-    <span class="pill">Life cycle analysis</span>
-    <div class="lca-main-title-wrapper">
-      <h1 class="lca-main-title">Environmental footprint of the Trinity hull</h1>
-    </div>
-    <p class="intro-text">
-      Composite boats are lightweight and efficient, but their materials and manufacturing steps are energy‑intensive and emit greenhouse gases over the boat’s life cycle.
-    </p>
-    <div class="highlight-box">
-      <p>
-        The LCA of Trinity focuses on the composite hull of our 70&nbsp;cm RC speedboat and helps us identify the main environmental hotspots and eco‑design options for future versions.
+    <section id="lca-intro">
+      <span class="pill">Life cycle analysis</span>
+      <div class="lca-main-title-wrapper">
+        <h1 class="lca-main-title">Environmental footprint of the Trinity hull</h1>
+      </div>
+      <p class="intro-text">
+        Composite boats are lightweight and efficient, but their materials and manufacturing steps are energy‑intensive and emit greenhouse gases over the boat’s life cycle.
       </p>
-    </div>
-  </section>
-
-  <!-- STUDIED SYSTEM -->
-  <section id="lca-system">
-    <div class="lca-section-title-wrapper">
-      <h2 class="lca-section-title">Studied system</h2>
-    </div>
-    <div class="grid-2">
-      <div>
-        <h3>Functional unit</h3>
+      <div class="highlight-box">
         <p>
-          One 70&nbsp;cm‑long remote‑controlled speedboat hull, made of carbon fiber and polyester resin, designed for repeated 20‑minute runs.
-        </p>
-
-        <h3>Main materials</h3>
-        <ul>
-          <li>Carbon fiber and polyester resin composite for the hull shell.</li>
-          <li>PLA used for the 3D‑printed mould.</li>
-        </ul>
-
-        <h3>Manufacturing steps</h3>
-        <ul>
-          <li>3D printing of the PLA mould.</li>
-          <li>Composite lay‑up and vacuum bagging.</li>
-          <li>Finishing and cleaning of the hull.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Goal and scope</h3>
-        <ul>
-          <li>Quantify the environmental impact of the composite hull.</li>
-          <li>Identify environmental hotspots in the life cycle.</li>
-          <li>Explore eco‑design improvement options for Trinity.</li>
-        </ul>
-        <p>
-          The study considers one hull manufactured and used in France over 2025–2026.
+          The LCA of Trinity focuses on the composite hull of our 70&nbsp;cm RC speedboat and helps us identify the main environmental hotspots and eco‑design options for future versions.
         </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SYSTEM BOUNDARIES -->
-  <section id="lca-boundaries">
-    <div class="lca-section-title-wrapper">
-      <h2 class="lca-section-title">System boundaries</h2>
-    </div>
-    <div class="grid-2">
-      <div>
-        <h3>Included processes</h3>
-        <ul>
-          <li>Production of composite raw materials (carbon fiber, resin).</li>
-          <li>PLA production for the mould.</li>
-          <li>Electricity used during manufacturing.</li>
-          <li>Use of acetone and water for processing and cleaning.</li>
-          <li>End‑of‑life treatment of composite and plastic waste.</li>
-        </ul>
+    <section id="lca-results">
+      <div class="lca-section-title-wrapper">
+        <h2 class="lca-section-title">Main results</h2>
       </div>
-      <div>
-        <h3>Excluded processes</h3>
-        <ul>
-          <li>Motor, battery, electronics, propeller and shaft.</li>
-          <li>Transport and maintenance during use.</li>
-        </ul>
-        <p>
-          The LCA therefore isolates the impact of the hull itself, without the rest of the RC system.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- INVENTORY + SOFTWARE -->
-  <section id="lca-inventory">
-    <div class="lca-section-title-wrapper">
-      <h2 class="lca-section-title">Life cycle inventory</h2>
-    </div>
-    <div class="grid-2">
-      <div>
-        <h3>Key inputs</h3>
-        <ul>
-          <li>Carbon fiber reinforced plastic: 2.4&nbsp;kg.</li>
-          <li>PLA granulate: 1&nbsp;kg.</li>
-          <li>Acetone: 0.3&nbsp;kg.</li>
-          <li>Electricity: 10&nbsp;kWh for mould printing and processing.</li>
-        </ul>
-        <p>
-          These flows represent the materials and energy needed to manufacture a single Trinity hull.
-        </p>
-      </div>
-      <div>
-        <h3>Key outputs</h3>
-        <ul>
-          <li>VOC emissions to air.</li>
-          <li>Water consumption and wastewater.</li>
-          <li>Mixed plastic waste and polyester fibre waste at end‑of‑life.</li>
-        </ul>
-        <p>
-          Carbon fiber composite waste is approximated using mixed plastic waste treatment due to limited datasets for carbon fiber waste.
-        </p>
-      </div>
-    </div>
-
-    <!-- Inventory figure -->
-    <div class="lca-figure">
-      <img src="pictures and video/network Diagram.png" alt="Life cycle inventory flows for the Trinity hull">
-      <p class="lca-figure-caption">
-        Life cycle inventory – main inputs (materials, energy) and outputs (emissions, waste) for one Trinity hull.
-      </p>
-    </div>
-
-    <!-- LCA modelling with two wide images -->
-    <h3 style="margin-top:40px;">LCA modelling</h3>
-    <p>
-      The study was modelled in SimaPro using the Ecoinvent 3 cut‑off database and the ReCiPe impact assessment method, with life cycle networks and impact graphs generated for the hull system.
-    </p>
-
-    <div class="lca-modelling-block">
-      <div class="lca-modelling-title">Life cycle networks and impact plots</div>
-
-      <div class="lca-modelling-grid">
-        <div class="lca-modelling-item">
-          <img src="pictures and video/Midpoint boat.png" alt="Life cycle network diagram for the hull">
-          <p class="lca-modelling-caption">Life cycle network – main processes and flows linked to the hull.</p>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Climate change impact</div>
+          <div class="kpi-value">≈ 0.026 kg CO₂‑eq</div>
+          <p class="kpi-note">Per composite hull.</p>
         </div>
-        <div class="lca-modelling-item">
-          <img src="pictures and video/Endpoint boat.png" alt="Environmental impact graph for the hull">
-          <p class="lca-modelling-caption">Impact graph – contribution of each input to different impact categories.</p>
+        <div class="kpi-card">
+          <div class="kpi-label">Carbon composite share</div>
+          <div class="kpi-value">97.5&nbsp;%</div>
+          <p class="kpi-note">Of the climate impact.</p>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Other inputs</div>
+          <div class="kpi-value">&lt; 3&nbsp;%</div>
+          <p class="kpi-note">PLA, acetone, electricity, waste.</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- RESULTS -->
-  <section id="lca-results">
-    <div class="lca-section-title-wrapper">
-      <h2 class="lca-section-title">Main results</h2>
-    </div>
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Climate change impact</div>
-        <div class="kpi-value">≈ 0.026 kg CO₂‑eq</div>
-        <p class="kpi-note">Per composite hull.</p>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Carbon composite share</div>
-        <div class="kpi-value">97.5&nbsp;%</div>
-        <p class="kpi-note">Of the climate impact.</p>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Other inputs</div>
-        <div class="kpi-value">&lt; 3&nbsp;%</div>
-        <p class="kpi-note">PLA, acetone, electricity, waste.</p>
-      </div>
-    </div>
-
-    <div class="highlight-box" style="margin-top:32px;">
-      <p>
-        Across impact categories such as climate change, marine eutrophication, fossil resource use, water consumption and toxicity, the carbon fiber composite clearly dominates the footprint of the hull.
-      </p>
-    </div>
-  </section>
-
-  <!-- IMPROVEMENT + LIMITATIONS -->
-  <section id="lca-improvements">
-    <div class="lca-section-title-wrapper">
-      <h2 class="lca-section-title">Improvement options and limitations</h2>
-    </div>
-    <div class="grid-2">
-      <div>
-        <h3>Eco‑design directions</h3>
-        <ul>
-          <li>Reduce composite material consumption and offcuts.</li>
-          <li>Optimise and reuse moulds to limit PLA and waste.</li>
-          <li>Reduce excess resin and improve manufacturing efficiency.</li>
-          <li>Use bio‑based or lower‑impact resins where feasible.</li>
-          <li>Use renewable electricity for energy‑intensive steps.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Study limitations</h3>
-        <ul>
-          <li>Only the hull was analysed, not the full boat system.</li>
-          <li>Some datasets are approximations from Ecoinvent.</li>
-        </ul>
+      <div class="highlight-box" style="margin-top:32px;">
         <p>
-          These limits should be kept in mind when interpreting the results, but they still provide a solid basis for guiding more sustainable design choices on Trinity.
+          Across impact categories such as climate change, marine eutrophication, fossil resource use, water consumption and toxicity, the carbon fiber composite clearly dominates the footprint of the hull.
         </p>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
 
-<footer>
-  &copy; 2026 Trinity Project – Life Cycle Analysis. All rights reserved.
-</footer>
+    <section id="lca-system">
+      <div class="lca-section-title-wrapper">
+        <h2 class="lca-section-title">Studied system</h2>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h3>Functional unit</h3>
+          <p>
+            One 70&nbsp;cm‑long remote‑controlled speedboat hull, made of carbon fiber and polyester resin, designed for repeated 20‑minute runs.
+          </p>
 
+          <h3>Main materials</h3>
+          <ul>
+            <li>Carbon fiber and polyester resin composite for the hull shell.</li>
+            <li>PLA used for the 3D‑printed mould.</li>
+          </ul>
+
+          <h3>Manufacturing steps</h3>
+          <ul>
+            <li>3D printing of the PLA mould.</li>
+            <li>Composite lay‑up and vacuum bagging.</li>
+            <li>Finishing and cleaning of the hull.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Goal and scope</h3>
+          <ul>
+            <li>Quantify the environmental impact of the composite hull.</li>
+            <li>Identify environmental hotspots in the life cycle.</li>
+            <li>Explore eco‑design improvement options for Trinity.</li>
+          </ul>
+          <p>
+            The study considers one hull manufactured and used in France over 2025–2026.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="lca-boundaries">
+      <div class="lca-section-title-wrapper">
+        <h2 class="lca-section-title">System boundaries</h2>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h3>Included processes</h3>
+          <ul>
+            <li>Production of composite raw materials (carbon fiber, resin).</li>
+            <li>PLA production for the mould.</li>
+            <li>Electricity used during manufacturing.</li>
+            <li>Use of acetone and water for processing and cleaning.</li>
+            <li>End‑of‑life treatment of composite and plastic waste.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Excluded processes</h3>
+          <ul>
+            <li>Motor, battery, electronics, propeller and shaft.</li>
+            <li>Transport and maintenance during use.</li>
+          </ul>
+          <p>
+            The LCA therefore isolates the impact of the hull itself, without the rest of the RC system.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="lca-inventory">
+      <div class="lca-section-title-wrapper">
+        <h2 class="lca-section-title">Life cycle inventory</h2>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h3>Key inputs</h3>
+          <ul>
+            <li>Carbon fiber reinforced plastic: 2.4&nbsp;kg.</li>
+            <li>PLA granulate: 1&nbsp;kg.</li>
+            <li>Acetone: 0.3&nbsp;kg.</li>
+            <li>Electricity: 10&nbsp;kWh for mould printing and processing.</li>
+          </ul>
+          <p>
+            These flows represent the materials and energy needed to manufacture a single Trinity hull.
+          </p>
+        </div>
+        <div>
+          <h3>Key outputs</h3>
+          <ul>
+            <li>VOC emissions to air.</li>
+            <li>Water consumption and wastewater.</li>
+            <li>Mixed plastic waste and polyester fibre waste at end‑of‑life.</li>
+          </ul>
+          <p>
+            Carbon fiber composite waste is approximated using mixed plastic waste treatment due to limited datasets for carbon fiber waste.
+          </p>
+        </div>
+      </div>
+
+      <div class="lca-figure">
+        <img src="pictures and video/network Diagram.png" alt="Life cycle inventory flows for the Trinity hull">
+        <p class="lca-figure-caption">
+          Life cycle inventory – main inputs (materials, energy) and outputs (emissions, waste) for one Trinity hull.
+        </p>
+      </div>
+
+      <h3 class="section-spaced-top">LCA modelling</h3>
+      <p style="text-align:center; max-width:850px; margin:0 auto;">
+        The study was modelled in SimaPro using the Ecoinvent 3 cut‑off database and the ReCiPe impact assessment method, with life cycle networks and impact graphs generated for the hull system.
+      </p>
+
+      <div class="lca-modelling-block">
+        <div class="lca-modelling-title">Life cycle networks and impact plots</div>
+
+        <div class="lca-modelling-grid">
+          <div class="lca-modelling-item">
+            <img src="pictures and video/Midpoint boat.png" alt="Life cycle network diagram for the hull">
+            <p class="lca-modelling-caption">Life cycle network – main processes and flows linked to the hull.</p>
+          </div>
+          <div class="lca-modelling-item">
+            <img src="pictures and video/Endpoint boat.png" alt="Environmental impact graph for the hull">
+            <p class="lca-modelling-caption">Impact graph – contribution of each input to different impact categories.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lca-improvements">
+      <div class="lca-section-title-wrapper">
+        <h2 class="lca-section-title">Improvement options and limitations</h2>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h3>Eco‑design directions</h3>
+          <ul>
+            <li>Reduce composite material consumption and offcuts.</li>
+            <li>Optimise and reuse moulds to limit PLA and waste.</li>
+            <li>Reduce excess resin and improve manufacturing efficiency.</li>
+            <li>Use bio‑based or lower‑impact resins where feasible.</li>
+            <li>Use renewable electricity for energy‑intensive steps.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Study limitations</h3>
+          <ul>
+            <li>Only the hull was analysed, not the full boat system.</li>
+            <li>Some datasets are approximations from Ecoinvent.</li>
+          </ul>
+          <p>
+            These limits should be kept in mind when interpreting the results, but they still provide a solid basis for guiding more sustainable design choices on Trinity.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Trinity Project – Life Cycle Analysis. All rights reserved.
+  </footer>
 </body>
 </html>
