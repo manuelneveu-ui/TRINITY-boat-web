@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Trinity – Gantt Planning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #111;
+      background: #fff;
+    }
+
+    .left-strip {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100vh;
+      background: #5ec6ff;
+      z-index: 0;
+    }
+
+    header, main, footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(0,0,0,0.88);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    header a.logo {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 16px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    nav a:hover,
+    nav a.active {
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 10px 24px;
+      background: #ff3b2f;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      border-radius: 2px;
+      margin-left: 24px;
+    }
+
+    main {
+      padding-top: 84px;
+    }
+
+    section {
+      padding: 60px 24px;
+      max-width: 1100px;
+      margin: 0 auto 0 180px;
+    }
+
+    h1, h2, h3 {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin: 0 0 16px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin: 0 0 18px;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin: 0 0 10px;
+    }
+
+    p {
+      line-height: 1.6;
+      margin: 0 0 16px;
+    }
+
+    .intro-block {
+      max-width: 900px;
+    }
+
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .quick-stats div {
+      border-top: 3px solid #111;
+      padding-top: 10px;
+    }
+
+    .quick-stats strong {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    .quick-stats span {
+      font-size: 13px;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .actions {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .link-btn {
+      display: inline-block;
+      padding: 10px 18px;
+      text-decoration: none;
+      border: 1px solid #111;
+      color: #111;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: #fff;
+    }
+
+    .timeline-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .timeline-list li {
+      margin-bottom: 22px;
+      padding-left: 18px;
+      border-left: 3px solid #5ec6ff;
+    }
+
+    .timeline-list strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .plain-block ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .plain-block li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .task-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px 36px;
+      margin-top: 10px;
+    }
+
+    .task-item {
+      padding-bottom: 18px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .task-item p {
+      margin-bottom: 8px;
+    }
+
+    .task-item .meta {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .note {
+      margin-top: 24px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    footer {
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      background: #000;
+      color: #aaa;
+      margin-left: 180px;
+    }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .left-strip { display: none; }
+      section {
+        margin: 0 auto;
+        padding: 40px 16px;
+      }
+      .quick-stats,
+      .task-list {
+        grid-template-columns: 1fr;
+      }
+      footer {
+        margin-left: 0;
+        padding: 24px 16px;
+      }
+      h1 { font-size: 28px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="left-strip"></div>
+
+  <header>
+    <a href="index.html" class="logo">Trinity</a>
+    <nav>
+      <a href="index.html#trinity">Trinity</a>
+      <a href="index.html#team">Team</a>
+      <a href="index.html#boat">Boat</a>
+      <a href="index.html#timeline">Timeline</a>
+      <a href="index.html#partners">Partners</a>
+      <a href="index.html#media">Media</a>
+      <a href="lca.html">LCA Study</a>
+      <a href="gantt-project-page.html" class="active">Gantt</a>
+      <a href="./GANTT.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+      <a href="connect.html" class="btn-primary">Trinity connect</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- INTRO -->
+    <section>
+      <div class="intro-block">
+        <h1>Gantt planning</h1>
+        <p>
+          This page presents the main information from the Trinity project planning in a clean format,
+          using the same style as the rest of the website.
+        </p>
+      </div>
+
+      <div class="quick-stats">
+        <div>
+          <strong>96%</strong>
+          <span>Done</span>
+        </div>
+        <div>
+          <strong>4%</strong>
+          <span>Not done</span>
+        </div>
+        <div>
+          <strong>Sep 2025</strong>
+          <span>Start</span>
+        </div>
+        <div>
+          <strong>May 2026</strong>
+          <span>End</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a class="link-btn" href="./GANTT.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>
+        <a class="link-btn" href="./GANTT.pdf" download>Download PDF</a>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section>
+      <h2>Timeline</h2>
+      <ul class="timeline-list">
+        <li>
+          <strong>Semester 1</strong>
+          The first semester includes go / no go validation, ordering electronic components,
+          composite tests, mold work, PLA printing, hull realization and the start of programming.
+        </li>
+        <li>
+          <strong>Toussaint break</strong>
+          Break planned from 24/10/2025 to 03/11/2025.
+        </li>
+        <li>
+          <strong>Winter break</strong>
+          Break planned from 19/12/2025 to 02/02/2026.
+        </li>
+        <li>
+          <strong>Semester 2</strong>
+          The second semester includes LCA step 3 and 4, final interface work, receiver / transmitter work,
+          foil integration, demonstration, communication material and conclusion.
+        </li>
+      </ul>
+    </section>
+
+    <!-- MAIN AREAS -->
+    <section>
+      <h2>Main areas</h2>
+      <div class="plain-block">
+        <ul>
+          <li>Validation and project go / no go steps.</li>
+          <li>Manufacturing, molds and printed parts.</li>
+          <li>Hull realization and boat construction.</li>
+          <li>Programming, interface and control system.</li>
+          <li>LCA, report writing and presentation material.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- MAIN TASKS -->
+    <section>
+  <h2>Main tasks</h2>
+  <div class="task-list">
+    <div class="task-item">
+      <h3>1. Go / No Go V1 and V2</h3>
+      <p>Initial validation sequence of the project.</p>
+      <p class="meta">08/09/2025 → 20/10/2025 · Responsible: Aya Mekrane</p>
+    </div>
+
+    <div class="task-item">
+      <h3>2. Order EEE components</h3>
+      <p>Ordering of key electronic parts for the project.</p>
+      <p class="meta">03/11/2025 → 07/11/2025 · Responsible: Guilherme Siqueira-Araujo</p>
+    </div>
+
+    <div class="task-item">
+      <h3>3. Composite test</h3>
+      <p>Testing phase linked to hull manufacturing work.</p>
+      <p class="meta">12/11/2025 → 17/11/2025 · Responsible: Oscar Delesalle</p>
+    </div>
+
+    <div class="task-item">
+      <h3>4. Mold and PLA manufacturing</h3>
+      <p>Mold assembly, mold printing and PLA component production.</p>
+      <p class="meta">03/11/2025 → 28/11/2025 · Responsible: Manuel Neveu</p>
+    </div>
+
+    <div class="task-item">
+      <h3>5. Hull realization</h3>
+      <p>Main hull building phase.</p>
+      <p class="meta">17/11/2025 → 05/12/2025 · Responsible: Oscar Delesalle</p>
+    </div>
+
+    <div class="task-item">
+      <h3>6. Boat programming start</h3>
+      <p>Beginning of software and control system development.</p>
+      <p class="meta">18/11/2025 → 05/12/2025 · Responsible: Guilherme Siqueira-Araujo</p>
+    </div>
+
+    <div class="task-item">
+      <h3>7. LCA step 1 and 2</h3>
+      <p>First environmental assessment phase.</p>
+      <p class="meta">12/10/2025 → 05/12/2025 · Responsible: Oscar Delesalle</p>
+    </div>
+
+    <div class="task-item">
+      <h3>8. LCA step 3 and 4</h3>
+      <p>Continuation and completion of the LCA study.</p>
+      <p class="meta">02/02/2026 → 01/05/2026 · Responsible: Oscar Delesalle</p>
+    </div>
+
+    <div class="task-item">
+      <h3>9. Final interface and receiver / transmitter</h3>
+      <p>Final software interface and control communication work.</p>
+      <p class="meta">02/02/2026 → 01/05/2026 · Responsible: Guilherme Siqueira-Araujo</p>
+    </div>
+
+    <div class="task-item">
+      <h3>10. Full project report</h3>
+      <p>Complete written report presenting the need, objectives, prototype and results.</p>
+      <p class="meta">02/02/2026 → 01/05/2026 · Responsible: Aya Mekrane</p>
+    </div>
+
+    <div class="task-item">
+      <h3>11. Foils and demonstration</h3>
+      <p>Final technical integration and demonstration phase.</p>
+      <p class="meta">01/04/2026 → 01/05/2026 · Responsible: Manuel Neveu</p>
+    </div>
+
+    <div class="task-item">
+      <h3>12. Poster, commercial video and conclusion</h3>
+      <p>Final communication support and project closing tasks.</p>
+      <p class="meta">May 2026 · Project conclusion is still marked as not finished in the PDF.</p>
+    </div>
+  </div>
+
+  <p class="note">
+    Some entries in the original Gantt PDF use placeholder dates, so this page focuses on the clearest and most useful information only.
+  </p>
+</section>
+  </main>
+
+  <footer>
+    &copy; 2026 Trinity Project – Manuel Neveu &amp; team. All rights reserved.
+  </footer>
+</body>
+</html>

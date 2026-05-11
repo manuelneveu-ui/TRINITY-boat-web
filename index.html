@@ -13,7 +13,6 @@
       background: #fff;
     }
 
-    /* FULL LEFT BLUE BAND */
     .left-strip {
       position: fixed;
       top: 0;
@@ -24,12 +23,11 @@
       z-index: 0;
     }
 
-    header, main, footer {
+    main, footer {
       position: relative;
       z-index: 1;
     }
 
-    /* HEADER */
     header {
       position: fixed;
       top: 0;
@@ -41,14 +39,18 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 24px;
-      z-index: 1000;
+      z-index: 5000;
       transition: background 0.3s ease, box-shadow 0.3s ease;
     }
+
     header.scrolled {
       background: rgba(0,0,0,0.85);
       box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
+
     header a.logo {
+      position: relative;
+      z-index: 5001;
       color: #fff;
       text-decoration: none;
       font-weight: bold;
@@ -56,11 +58,17 @@
       text-transform: uppercase;
       font-size: 14px;
     }
+
     nav {
       display: flex;
       align-items: center;
+      position: relative;
+      z-index: 5001;
     }
+
     nav a {
+      position: relative;
+      z-index: 5002;
       color: #fff;
       text-decoration: none;
       margin-left: 16px;
@@ -68,6 +76,7 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
@@ -77,7 +86,6 @@
       letter-spacing: 0.06em;
     }
 
-    /* HERO */
     .hero {
       position: relative;
       height: 100vh;
@@ -90,6 +98,7 @@
       color: #fff;
       overflow: hidden;
     }
+
     .hero-video {
       position: absolute;
       top: 50%;
@@ -98,28 +107,38 @@
       height: 100%;
       transform: translate(-50%, -50%);
       object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
     }
+
     .hero-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(120deg, rgba(0,0,0,0.7), rgba(0,0,0,0.25));
+      z-index: 0;
+      pointer-events: none;
     }
+
     .hero-inner {
       position: relative;
+      z-index: 1;
       max-width: 700px;
       padding: 80px 24px;
       transform: translateY(0);
       opacity: 1;
       transition: transform 0.5s ease, opacity 0.5s ease;
     }
+
     .hero h1 {
       font-size: 36px;
       margin-bottom: 16px;
     }
+
     .hero p {
       font-size: 18px;
       line-height: 1.5;
     }
+
     .btn-primary {
       display: inline-block;
       margin-top: 24px;
@@ -133,13 +152,12 @@
       border-radius: 2px;
     }
 
-    /* SECTIONS */
-    main {}
     section {
       padding: 60px 24px;
       max-width: 1100px;
       margin: 0 auto 0 180px;
     }
+
     section.hero {
       max-width: none;
       padding: 0;
@@ -152,12 +170,14 @@
       gap: 32px;
       align-items: center;
     }
+
     img.responsive {
       max-width: 100%;
       height: auto;
       display: block;
       border-radius: 4px;
     }
+
     ul {
       padding-left: 18px;
     }
@@ -168,16 +188,17 @@
       margin: 0 auto;
     }
 
-    /* TEAM GRID */
     .team-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 32px;
       margin-top: 32px;
     }
+
     .team-card {
       text-align: center;
     }
+
     .team-photo {
       width: 180px;
       height: 180px;
@@ -186,28 +207,30 @@
       display: block;
       margin: 0 auto 16px;
     }
+
     .team-name {
       margin: 0 0 4px;
       font-size: 18px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
+
     .team-role {
       margin: 0;
       font-size: 14px;
       color: #555;
     }
 
-    /* MEDIA GALLERY */
     .media-gallery {
-  display: none;   /* will be turned on by JS */
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-top: 24px;
-}
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
     .media-thumb {
       width: 100%;
-      max-width: 320px;   /* smaller thumbnails to reduce work */
+      max-width: 320px;
       height: 180px;
       object-fit: cover;
       display: block;
@@ -215,12 +238,12 @@
       border-radius: 4px;
       transition: transform 0.3s ease, filter 0.3s ease;
     }
+
     .media-thumb:hover {
       transform: scale(1.05);
       filter: brightness(1.1);
     }
 
-    /* Lightbox */
     .lightbox {
       position: fixed;
       inset: 0;
@@ -230,20 +253,24 @@
       justify-content: center;
       z-index: 2000;
     }
+
     .lightbox.open {
       display: flex;
     }
+
     .lightbox-content {
       max-width: 90vw;
       max-height: 90vh;
       position: relative;
     }
+
     .lightbox-img {
       max-width: 100%;
       max-height: 100%;
       display: block;
       border-radius: 4px;
     }
+
     .lightbox-close {
       position: absolute;
       top: -32px;
@@ -262,13 +289,13 @@
       margin-left: 180px;
     }
 
-    /* Timeline header */
     .timeline-header {
       display: flex;
       align-items: center;
       gap: 16px;
       margin-bottom: 16px;
     }
+
     .timeline-title-image {
       width: 80px;
       height: auto;
@@ -276,13 +303,13 @@
       object-fit: cover;
     }
 
-    /* Boat header */
     .boat-header {
       display: flex;
       align-items: center;
       gap: 16px;
       margin-bottom: 16px;
     }
+
     .boat-title-image {
       width: 80px;
       height: auto;
@@ -300,10 +327,12 @@
       .left-strip {
         display: none;
       }
+
       section {
         margin: 0 auto;
         padding: 40px 16px;
       }
+
       footer {
         margin-left: 0;
         padding: 24px 16px;
@@ -319,27 +348,29 @@
   <a href="#hero" class="logo">Trinity</a>
 
   <nav>
-  <a href="#trinity">Trinity</a>
-  <a href="#team">Team</a>
-  <a href="#boat">Boat</a>
-  <a href="#timeline">Timeline</a>
-  <a href="#partners">Partners</a>
-  <a href="#media">Media</a>
-  <a href="lca.html">LCA study</a>  <!-- added here -->
-
-  <a href="connect.html"
-     class="btn-primary"
-     id="trinity-connect"
-     style="margin-left:24px;">
-    TRINITY connect
-  </a>
-</nav>
-
+    <a href="#trinity">Trinity</a>
+    <a href="#team">Team</a>
+    <a href="#boat">Boat</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#partners">Partners</a>
+    <a href="#media">Media</a>
+    <a href="lca.html">LCA study</a>
+    <a href="gantt-project-page.html">Gantt</a>
+    <a href="pictures and video/Pictures and video/Pictures/notice trinity boat.pdf"
+       target="_blank"
+       rel="noopener noreferrer">
+      Notice
+    </a>
+    <a href="connect.html"
+       class="btn-primary"
+       id="trinity-connect"
+       style="margin-left:24px;">
+      TRINITY connect
+    </a>
+  </nav>
 </header>
 
 <main>
-
-  <!-- HERO -->
   <section id="hero" class="hero">
     <video class="hero-video" autoplay muted loop playsinline>
       <source src="pictures and video/Pictures and video/bateau .mp4" type="video/mp4">
@@ -357,7 +388,6 @@
     </div>
   </section>
 
-  <!-- TRINITY -->
   <section id="trinity">
     <h2>Trinity, when three become one</h2>
     <p>
@@ -371,7 +401,6 @@
     </p>
   </section>
 
-  <!-- TEAM -->
   <section id="team">
     <h2>The team</h2>
 
@@ -382,38 +411,31 @@
         <p class="team-role">LCA &amp; reports</p>
       </div>
       <div class="team-card">
-        <img src="pictures and video/Pictures and video/Capture d'écran 2026-03-04 162105.png"
-             alt="Manuel Neveu" class="team-photo">
+        <img src="pictures and video/Pictures and video/Capture d'écran 2026-03-04 162105.png" alt="Manuel Neveu" class="team-photo">
         <h3 class="team-name">Manuel Neveu</h3>
         <p class="team-role">Hull &amp; foil study</p>
       </div>
       <div class="team-card">
-        <img src="pictures and video/Pictures and video/picture guigui.png"
-             alt="Guilherme Sequiera Araujo" class="team-photo">
+        <img src="pictures and video/Pictures and video/picture guigui.png" alt="Guilherme Sequiera Araujo" class="team-photo">
         <h3 class="team-name">Guilherme Sequiera Araujo</h3>
-        <p class="team-role">Manufacturing &amp; testingManufacturing &amp; electronics</p>
+        <p class="team-role">Manufacturing &amp; electronics</p>
       </div>
       <div class="team-card">
-        <img src="pictures and video/Pictures and video/Capture d'écran 2026-03-04 162352.png"
-             alt="Oscar Delesalle" class="team-photo">
+        <img src="pictures and video/Pictures and video/Capture d'écran 2026-03-04 162352.png" alt="Oscar Delesalle" class="team-photo">
         <h3 class="team-name">Oscar Delesalle</h3>
         <p class="team-role">Manufacturing &amp; testing</p>
       </div>
       <div class="team-card">
         <img src="pictures and video/Pictures and video/picture bhanavi.png" alt="Bhanavi Pantey" class="team-photo">
-        <h3 class="team-name">Bhanavi Pantey</h3>+
+        <h3 class="team-name">Bhanavi Pantey</h3>
         <p class="team-role">Coding</p>
       </div>
     </div>
   </section>
 
-  <!-- BOAT -->
   <section id="boat">
     <div class="boat-header">
-      <img
-        src="pictures and video/Pictures and video/Pictures/dessin speedboat.jpg"
-        alt="Boat sketch"
-        class="boat-title-image">
+      <img src="pictures and video/Pictures and video/Pictures/dessin speedboat.jpg" alt="Boat sketch" class="boat-title-image">
       <h2>The boat</h2>
     </div>
 
@@ -430,7 +452,6 @@
     </div>
   </section>
 
-  <!-- FOIL -->
   <section id="foil">
     <h2>The foil design</h2>
     <div class="grid-2">
@@ -446,13 +467,9 @@
     </div>
   </section>
 
-  <!-- TIMELINE -->
   <section id="timeline">
     <div class="timeline-header">
-      <img
-        src="pictures and video/milestone flat icon.png"
-        alt="Timeline side photo"
-        class="timeline-title-image">
+      <img src="pictures and video/milestone flat icon.png" alt="Timeline side photo" class="timeline-title-image">
       <h2>Timeline and milestones</h2>
     </div>
 
@@ -460,12 +477,11 @@
       <li><strong>Year 1</strong> – The first team composed of Oscar Delesalle, Gabriel Perrotin, Felix Olivier and Milo Bessonet worked on the first versions of the hull and the choice of components. At this date, the teachers successfully approved the project, which led us to the second part of the project: manufacturing of the boat.</li>
       <br><li><strong>Year 2</strong> – At the beginning of the second year, the new team composed of Guilherme Sequeira Araujo, Aya Mekrane, Manuel Neveu and Oscar Delesalle took over. Oscar was already in the first‑year group and was selected as the link between Year&nbsp;1 and Year&nbsp;2.</li>
       <br><li><strong>January 2026</strong> – A new member joined us: Bhanavi Pandey, an Indian engineering student spending three months at ICAM. Thanks to her software and coding skills, we were able to push the project one step further.</li>
-      <br><li><strong>27th April 2026</strong> – The boat floats and can go forward,backward and even turn according to the phones instructions.But they are still waterproof issues around the shaft and Servo-mount.</b></li>
-        <br><li><strong>Goal</strong> – A reliable, performant boat for demos and technical presentations.</li>
+      <br><li><strong>27th April 2026</strong> – The boat floats and can go forward, backward and even turn according to the phone’s instructions. But there are still waterproofing issues around the shaft and servo mount.</li>
+      <br><li><strong>Goal</strong> – A reliable, performant boat for demos and technical presentations.</li>
     </ul>
   </section>
 
-  <!-- PARTNERS -->
   <section id="partners">
     <h2>Partners and support</h2>
     <p>
@@ -478,66 +494,66 @@
     <img src="pictures and video/Pictures and video/logo icam.svg" alt="Trinity partners logos" class="responsive">
   </section>
 
-  <!-- MEDIA -->
-
   <section id="media">
     <h2>Media</h2>
     <p>Photo gallery of the boat: build, setup and on‑water runs.</p>
-      <div id="gallery-loader" style="
-  position: fixed;
-  inset: 0;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;
-">
-  <div>
-    <img src="pictures and video/Pictures and video/loading picture.gif" alt="Loading" style="width:64px;height:64px;display:block;margin:0 auto;">
-    <p style="margin-top:8px;font-size:13px;color:#555;text-align:center;">Loading media…</p>
-  </div></div>
+
+    <div id="gallery-loader" style="
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+    ">
+      <div>
+        <img src="pictures and video/Pictures and video/loading picture.gif" alt="Loading" style="width:64px;height:64px;display:block;margin:0 auto;">
+        <p style="margin-top:8px;font-size:13px;color:#555;text-align:center;">Loading media…</p>
+      </div>
+    </div>
 
     <div class="media-gallery">
-      <img src="pictures and video/Converted .PNG/IMG_5685.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5686.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5714.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5715.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5716.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5717.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5720.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5721.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5727.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5728.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5729.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5730.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5763.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5819.jpg" class="media-thumb" alt="" >
+      <img src="pictures and video/Converted .PNG/IMG_5685.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5686.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5714.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5715.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5716.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5717.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5720.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5721.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5727.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5728.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5729.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5730.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5763.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5819.jpg" class="media-thumb" alt="">
       <img src="pictures and video/Converted .PNG/IMG_5973.jpg" class="media-thumb" alt="">
-      <img src="pictures and video/Converted .PNG/IMG_5975.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5976.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5988.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5989.jpg" class="media-thumb" alt="" >
-      <img src="pictures and video/Converted .PNG/IMG_5991.jpg" class="media-thumb" alt="" >
-        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-06-23 203528.png" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-06-24 004855.png" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-10-12 235425.png" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-12-02 102307.png" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-12-02 102345.png" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-12-02 102410.png" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_102359.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_104820.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105738.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105743.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105953.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105955.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_110304.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_110313.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152300.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152306.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152317.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_5825.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/IMG_5992.jpg" class="media-thumb" alt="">
-        <img src="pictures and video/Pictures and video/Pictures/dessin speedboat.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5975.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5976.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5988.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5989.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Converted .PNG/IMG_5991.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-06-23 203528.png" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-06-24 004855.png" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-10-12 235425.png" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-12-02 102307.png" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-12-02 102345.png" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/Capture d_écran 2025-12-02 102410.png" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_102359.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_104820.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105738.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105743.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105953.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_105955.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_110304.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20251205_110313.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152300.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152306.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_20260211_152317.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_5825.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/IMG_5992.jpg" class="media-thumb" alt="">
+      <img src="pictures and video/Pictures and video/Pictures/dessin speedboat.jpg" class="media-thumb" alt="">
     </div>
   </section>
 </main>
@@ -546,39 +562,44 @@
   &copy; 2026 Trinity Project – Manuel Neveu &amp; team. All rights reserved.
 </footer>
 
-<div class="lightbox" id="lightbox"></div>
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="Expanded media">
+  </div>
+</div>
 
 <script>
-    // -------- Gallery preload & loader --------
-window.addEventListener('load', () => {
-  const loader = document.getElementById('gallery-loader');
-  const gallery = document.querySelector('.media-gallery');
-  const imgs = gallery ? Array.from(gallery.querySelectorAll('img')) : [];
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('gallery-loader');
+    const gallery = document.querySelector('.media-gallery');
+    const imgs = gallery ? Array.from(gallery.querySelectorAll('img')) : [];
 
-  if (!gallery || imgs.length === 0) {
-    if (loader) loader.style.display = 'none';
-    if (gallery) gallery.style.display = 'grid';
-    return;
-  }
-
-  let loaded = 0;
-  const total = imgs.length;
-
-  function checkDone() {
-    loaded++;
-    if (loaded >= total) {
+    if (!gallery || imgs.length === 0) {
       if (loader) loader.style.display = 'none';
-      gallery.style.display = 'grid';
+      if (gallery) gallery.style.display = 'grid';
+      return;
     }
-  }
 
-  imgs.forEach(img => {
-    const tmp = new Image();
-    tmp.onload = checkDone;
-    tmp.onerror = checkDone;
-    tmp.src = img.src;
+    let loaded = 0;
+    const total = imgs.length;
+
+    function checkDone() {
+      loaded++;
+      if (loaded >= total) {
+        if (loader) loader.style.display = 'none';
+        gallery.style.display = 'grid';
+      }
+    }
+
+    imgs.forEach(img => {
+      const tmp = new Image();
+      tmp.onload = checkDone;
+      tmp.onerror = checkDone;
+      tmp.src = img.src;
+    });
   });
-});
+
   window.addEventListener('scroll', () => {
     const heroInner = document.querySelector('.hero-inner');
     if (!heroInner) return;
